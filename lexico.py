@@ -1,58 +1,63 @@
-import parsimonious
-from parsimonious.grammar import Grammar
+import ply.lex as lex
 
-# Definición de la gramática
-grammar = Grammar(
-    r"""
-    start = token*
-    token = keyword / float / integer / identifier / char / symbol
-    keyword = ~"int|float|char"i
-    float = integer ~"\.\d+"
-    integer = ~"\d+"
-    identifier = ~"[a-zA-Z_]\w*"
-    char = "'" ~r"'"i
-    symbol = ~"."
-    """
+# Lista de tokens
+tokens = (
+    'KeyWord',
+    'Flotante',
+    'Numero',
+    'Id',
+    'Character',
+    'Symbol',
 )
 
-# Parseador de tokens
-class TokenParser(parsimonious.NodeVisitor):
-    def generic_visit(self, node, visited_children):
-        return visited_children or node
+# Reglas de los tokens
+def t_KeyWord(t):
+    r'int|float|char'
+    return t
 
-    def visit_keyword(self, node, _):
-        return Token("KeyWord", node.text)
+def t_Flotante(t):
+    r'\d+\.\d+'
+    t.value = float(t.value)
+    return t
 
-    def visit_float(self, node, _):
-        return Token("Flotante", float(node.text))
+def t_Numero(t):
+    r'\d+'
+    t.value = int(t.value)
+    return t
 
-    def visit_integer(self, node, _):
-        return Token("Numero", int(node.text))
+def t_Character(t):
+    r"'.'"
+    return t
 
-    def visit_identifier(self, node, _):
-        return Token("Id", node.text)
+def t_Id(t):
+    r'[a-zA-Z_]\w*'
+    return t
 
-    def visit_char(self, node, _):
-        return Token("Character", node.text)
+def t_Symbol(t):
+    r'[,;+\-*/()=]'
+    return t
 
-    def visit_symbol(self, node, _):
-        return Token("Symbol", node.text)
+# Caracteres ignorados (espacios y saltos de línea)
+t_ignore = ' \t\n'
 
-# Clase de tokens
-class Token:
-    def __init__(self, type, value):
-        self.type = type
-        self.value = value
+# Manejo de errores
+def t_error(t):
+    raise CaracterNoReconocidoError(t.value[0],t.lexpos)
 
-    def __str__(self):
-        return f"{self.type}({self.value})"
+# Construir el analizador léxico
+def analisis(input):
+    ana = lex.lex()
+    ana.input(input)
+    return ana
 
-# Función para analizar tokens
-def parse_tokens(input):
-    parse_tree = grammar.parse(input)
-    return TokenParser().visit(parse_tree)
 
-# Función para analizar tokens con espacios en blanco opcionales alrededor
-def parse_tokens_with_spaces(input):
-    input = input.strip()
-    return [token for tokens in parse_tokens(input) for token in tokens]
+# clase para la excepcion de caracter no valido
+class CaracterNoReconocidoError(Exception):
+    def __init__(self, caracter, ubicacion):
+        self.caracter = caracter
+        self.ubicacion = ubicacion
+        if caracter == "'":
+            super().__init__(f"No se encontro la ' de cierre en la ubicacion: ",ubicacion)
+        else:
+            super().__init__(f"Carácter no reconocido: " + caracter+ " en ",ubicacion)
+        

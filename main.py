@@ -11,7 +11,8 @@ if len(sys.argv) == 2:
         try:
             with open(archivo, "r") as file:
                 for linea in file:
-                    tokens = lexico.parse_tokens_with_spaces(linea)
+                    #linea = linea.split()
+                    tokens = lexico.analisis(linea)
                     for token in tokens:
                         if token.type == "KeyWord":
                             cod_intermedio.append(token.value)
@@ -23,7 +24,9 @@ if len(sys.argv) == 2:
                             cod_intermedio.append(token.value)
                 cod_intermedio = [item for item in cod_intermedio if item != ' ']
                 cod_intermedio += "$"
-                sintactico.analisis(cod_intermedio,estado_actual)           
+                sintactico.analisis(cod_intermedio,estado_actual)  
+        except lexico.CaracterNoReconocidoError as e:
+            print(f"Error lexico : ",e)
         except FileNotFoundError:
             print(f"El archivo {archivo} no se encontro")
         except Exception as e:
