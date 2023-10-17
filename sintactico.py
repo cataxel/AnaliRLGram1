@@ -143,7 +143,7 @@ def obtener_fila_columna(estado_actual, token):
 
 
 def Errores(accion,pila,estado_actual):
-    if accion == "error":
+    if accion == "error ":
         if estado_actual == "q32":
             print("Error")
     else:
