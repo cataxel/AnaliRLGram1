@@ -1,1 +1,1 @@
-char d; d = ( 2 + 3 );
+float y,x; int c ; y = (5 + 6-y / z * x);

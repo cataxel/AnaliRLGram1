@@ -1,0 +1,83 @@
+estado actual: q0 accion: q5
+Entrada float pila: ($, q0) Desplaza float a la pila y estado:q5
+sig estado actual: q0 accion: q5
+estado actual: q5 accion: P4
+Entrada id pila: ($,q0,float,q5 ) P4:Tipo float 2
+estado actual: q2 accion: q8
+Entrada id pila: ($, q0, Tipo, q2) Desplaza id a la pila y estado:q8
+sig estado actual: q2 accion: q8
+estado actual: q8 accion: q11
+Entrada , pila: ($, q0, Tipo, q2, id, q8) Desplaza , a la pila y estado:q11
+sig estado actual: q8 accion: q11
+estado actual: q11 accion: q21
+Entrada id pila: ($, q0, Tipo, q2, id, q8, ,, q11) Desplaza id a la pila y estado:q21
+sig estado actual: q11 accion: q21
+estado actual: q21 accion: q12
+Entrada ; pila: ($, q0, Tipo, q2, id, q8, ,, q11, id, q21) Desplaza ; a la pila y estado:q12
+sig estado actual: q21 accion: q12
+estado actual: q12 accion: q7
+Entrada id pila: ($, q0, Tipo, q2, id, q8, ,, q11, id, q21, ;, q12) Desplaza id a la pila y estado:q7
+sig estado actual: q12 accion: q7
+estado actual: q7 accion: q9
+Entrada = pila: ($, q0, Tipo, q2, id, q8, ,, q11, id, q21, ;, q12, id, q7) Desplaza = a la pila y estado:q9
+sig estado actual: q7 accion: q9
+estado actual: q9 accion: q20
+Entrada ( pila: ($, q0, Tipo, q2, id, q8, ,, q11, id, q21, ;, q12, id, q7, =, q9) Desplaza ( a la pila y estado:q20
+sig estado actual: q9 accion: q20
+estado actual: q20 accion: q19
+Entrada num pila: ($, q0, Tipo, q2, id, q8, ,, q11, id, q21, ;, q12, id, q7, =, q9, (, q20) Desplaza num a la pila y estado:q19
+sig estado actual: q20 accion: q19
+estado actual: q19 accion: P20
+Entrada + pila: ($,q0,Tipo,q2,id,q8,,,q11,id,q21,;,q12,id,q7,=,q9,(,q20,num,q19 ) P20:F num 2
+estado actual: q17 accion: P18
+Entrada + pila: ($,q0,Tipo,q2,id,q8,,,q11,id,q21,;,q12,id,q7,=,q9,(,q20,F,q17 ) P18:T € 0
+estado actual: q29 accion: P15
+Entrada + pila: ($,q0,Tipo,q2,id,q8,,,q11,id,q21,;,q12,id,q7,=,q9,(,q20,F,q17,T,q29 ) P15:Term F T 4
+estado actual: q16 accion: q27
+Entrada + pila: ($, q0, Tipo, q2, id, q8, ,, q11, id, q21, ;, q12, id, q7, =, q9, (, q20, Term, q16) Desplaza + a la pila y estado:q27
+sig estado actual: q16 accion: q27
+estado actual: q27 accion: q19
+Entrada num pila: ($, q0, Tipo, q2, id, q8, ,, q11, id, q21, ;, q12, id, q7, =, q9, (, q20, Term, q16, +, q27) Desplaza num a la pila y estado:q19
+sig estado actual: q27 accion: q19
+estado actual: q19 accion: P20
+Entrada ) pila: ($,q0,Tipo,q2,id,q8,,,q11,id,q21,;,q12,id,q7,=,q9,(,q20,Term,q16,+,q27,num,q19 ) P20:F num 2
+estado actual: q17 accion: P18
+Entrada ) pila: ($,q0,Tipo,q2,id,q8,,,q11,id,q21,;,q12,id,q7,=,q9,(,q20,Term,q16,+,q27,F,q17 ) P18:T € 0
+estado actual: q29 accion: P15
+Entrada ) pila: ($,q0,Tipo,q2,id,q8,,,q11,id,q21,;,q12,id,q7,=,q9,(,q20,Term,q16,+,q27,F,q17,T,q29 ) P15:Term F T 4
+estado actual: q36 accion: P14
+Entrada ) pila: ($,q0,Tipo,q2,id,q8,,,q11,id,q21,;,q12,id,q7,=,q9,(,q20,Term,q16,+,q27,Term,q36 ) P14:E € 0
+estado actual: q41 accion: P12
+Entrada ) pila: ($,q0,Tipo,q2,id,q8,,,q11,id,q21,;,q12,id,q7,=,q9,(,q20,Term,q16,+,q27,Term,q36,E,q41 ) P12:E + Term E 6
+estado actual: q26 accion: P11
+Entrada ) pila: ($,q0,Tipo,q2,id,q8,,,q11,id,q21,;,q12,id,q7,=,q9,(,q20,Term,q16,E,q26 ) P11:Exp Term E 4
+estado actual: q32 accion: q40
+Entrada ) pila: ($, q0, Tipo, q2, id, q8, ,, q11, id, q21, ;, q12, id, q7, =, q9, (, q20, Exp, q32) Desplaza ) a la pila y estado:q40
+sig estado actual: q32 accion: q40
+estado actual: q40 accion: P21
+Entrada ; pila: ($,q0,Tipo,q2,id,q8,,,q11,id,q21,;,q12,id,q7,=,q9,(,q20,Exp,q32,),q40 ) P21:F ( Exp ) 6
+estado actual: q17 accion: P18
+Entrada ; pila: ($,q0,Tipo,q2,id,q8,,,q11,id,q21,;,q12,id,q7,=,q9,F,q17 ) P18:T € 0
+estado actual: q29 accion: P15
+Entrada ; pila: ($,q0,Tipo,q2,id,q8,,,q11,id,q21,;,q12,id,q7,=,q9,F,q17,T,q29 ) P15:Term F T 4
+estado actual: q16 accion: P14
+Entrada ; pila: ($,q0,Tipo,q2,id,q8,,,q11,id,q21,;,q12,id,q7,=,q9,Term,q16 ) P14:E € 0
+estado actual: q26 accion: P11
+Entrada ; pila: ($,q0,Tipo,q2,id,q8,,,q11,id,q21,;,q12,id,q7,=,q9,Term,q16,E,q26 ) P11:Exp Term E 4
+estado actual: q13 accion: q23
+Entrada ; pila: ($, q0, Tipo, q2, id, q8, ,, q11, id, q21, ;, q12, id, q7, =, q9, Exp, q13) Desplaza ; a la pila y estado:q23
+sig estado actual: q13 accion: q23
+estado actual: q23 accion: P8
+Entrada $ pila: ($,q0,Tipo,q2,id,q8,,,q11,id,q21,;,q12,id,q7,=,q9,Exp,q13,;,q23 ) P8:A id = Exp ; 8
+estado actual: q3 accion: P2
+Entrada $ pila: ($,q0,Tipo,q2,id,q8,,,q11,id,q21,;,q12,A,q3 ) P2:P A 2
+estado actual: q22 accion: P7
+Entrada $ pila: ($,q0,Tipo,q2,id,q8,,,q11,id,q21,;,q12,P,q22 ) P7:V ; P 4
+estado actual: q33 accion: P6
+Entrada $ pila: ($,q0,Tipo,q2,id,q8,,,q11,id,q21,V,q33 ) P6:V , id V 6
+estado actual: q10 accion: P1
+Entrada $ pila: ($,q0,Tipo,q2,id,q8,V,q10 ) P1:P Tipo Id V 6
+estado actual: q1 accion: P0
+Entrada $ pila: ($,q0,P,q1 ) P0:P' P 2
+Entrada $ pila: ($ ) la cadena se acepta
+

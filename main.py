@@ -7,6 +7,7 @@ cod_intermedio = []
 estado_actual = "q0"
 if len(sys.argv) == 2:
     archivo = sys.argv[1]
+    lexemas = []
     if archivo.endswith(".ibi"):
         try:
             with open(archivo, "r") as file:
@@ -14,6 +15,8 @@ if len(sys.argv) == 2:
                     #linea = linea.split()
                     tokens = lexico.analisis(linea)
                     for token in tokens:
+                        
+                        lexemas.append(token.value)
                         if token.type == "KeyWord":
                             cod_intermedio.append(token.value)
                         elif token.type == "Numero" or token.type == "Flotante":
@@ -27,6 +30,8 @@ if len(sys.argv) == 2:
                 sintactico.analisis(cod_intermedio,estado_actual)  
         except lexico.CaracterNoReconocidoError as e:
             print(f"Error lexico : ",e)
+        except sintactico.ErrorSintactico as e:
+            print(f"Error---",str(e) + token.value)
         except FileNotFoundError:
             print(f"El archivo {archivo} no se encontro")
         except Exception as e:

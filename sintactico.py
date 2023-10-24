@@ -35,7 +35,7 @@ tabla = [
     ["",    "",    "",     "",      "",   "", "P15","P15","P15", "",   "",   "", "P15", "",  "",  "",   "",     "", "",   "",   "",    "",   "",  ""],
     ["q18","q19",  "",     "",      "",   "",  "",   "",   "",   "",   "", "q20", "",   "",  "",  "",   "",     "", "",   "",   "",    "",   "", "q38"],
     ["q18","q19",  "",     "",      "",   "",  "",   "",   "",   "",   "", "q20", "",   "",  "",  "",   "",     "", "",   "",   "",    "",   "", "q40"],
-    ["",    "",    "",     "",      "",   "","error",   "",   "",   "",   "",   "", "q40", "",  "",  "",   "",     "", "",   "",   "",    "",   "",  ""],
+    ["",    "",    "",     "",      "",   "",  "",   "",   "",   "",   "",   "", "q40", "",  "",  "",   "",     "", "",   "",   "",    "",   "",  ""],
     ["",    "",    "",     "",      "",   "",  "",   "",   "",   "",   "",   "",  "",   "", "P6", "",   "",     "", "",   "",   "",    "",   "",  ""],
     ["",    "",    "",     "",      "",   "", "P9",  "",   "",   "",   "",   "", "P9",  "",  "",  "",   "",     "", "",   "",   "",    "",   "",  ""],
     ["",    "",    "",     "",      "",   "", "P10", "",   "",   "",   "",   "", "P10", "",  "",  "",   "",     "", "",   "",   "",    "",   "",  ""],
@@ -81,7 +81,6 @@ pila.append("$")
 pila.append("q0")
 estado_actual = ""
 def analisis(tokens, estado_actual):
-    
     for token in tokens:
         if token == pila[-1]:
             pila_str = ",".join(map(str, pila))
@@ -90,8 +89,11 @@ def analisis(tokens, estado_actual):
         #print("1--- "+estado_actual)
         #estado_actual = pila[-1]
         accion = obtener_fila_columna(estado_actual,token)
-        if Errores(accion,pila,estado_actual):
-            break
+        if accion == "":
+            print(pila)
+            raise ErrorSintactico(accion,estado_actual)
+        #if Errores(accion,pila,estado_actual,lexema,tokens,contador,token):
+        #    raise ErrorSintactico(accion,pila,estado_actual,lexema,token)
         print("estado actual: "+estado_actual +" accion: "+accion)
         # si la accion es produccion
         if accion in producciones:
@@ -141,10 +143,95 @@ def obtener_fila_columna(estado_actual, token):
 
     return tabla[fil][colum]
 
+class ErrorSintactico(Exception):
+    def __init__(self, accion, estado_actual):
+        self.accion = accion
+        self.pila = pila
+        self.estado_actual = estado_actual
+        #self.lexemas = lexemas
+        #self.tokens = tokens
+        #self.contador = contador
+        #self.token = token
+        super().__init__(self.__str__())
 
-def Errores(accion,pila,estado_actual):
-    if accion == "error ":
-        if estado_actual == "q32":
-            print("Error")
+    def __str__(self):
+        valores_aceptados = []
+        cont = 0
+        if self.accion == "":
+            for fila, estado in enumerate(ESTADOS):
+                if self.estado_actual == estado:
+                    filas = tabla[fila]
+                    for elemento in filas:
+                        if elemento != "":
+                            valores_aceptados.append(terminales_no_terminales[cont])
+                        cont += 1
+            valores = ", ".join(map(str, valores_aceptados))
+            mensaje = "Error sintáctico: se esperaba " + valores + " se obtuvo un: "
+            return mensaje
+        else:
+            return "Error sintáctico desconocido"
+
+
+'''
+def Errores(accion,pila,estado_actual,lexemas,tokens,contador,token):
+    valores_aceptados = []
+    cont = 0
+    if accion == "":
+        for fila, estado in enumerate(ESTADOS):
+            if estado_actual == estado:
+                filas = tabla[fila]
+                for elemento in filas:
+                    if elemento != "":
+                        valores_aceptados.append(terminales_no_terminales[cont])
+                    cont += 1
+        valores = ", ".join(map(str, valores_aceptados))
+        print(pila)
+        print("Error sintactico se esperaba: "+valores+" se obtuvo un: ")
+        return True
     else:
         return False
+
+    print(valores_aceptados)
+    item = ""
+    for lexema in lexemas:
+
+        item = lexema
+    if accion == "":
+        if estado_actual == "q27":
+            pila_str = ", ".join(map(str, pila))
+            print("Pila: "+pila_str)
+            print("Error sintactico se esperaba un termino pero se obtuvo un: "+token)
+            return True
+        elif estado_actual == "q40":
+            pila_str = ", ".join(map(str, pila))
+            print("Pila: "+pila_str)
+            print("Error sintactico se esperaba un operando o ';' pero se obtuvo un: "+token)
+            return True
+        elif estado_actual == "q7":
+            pila_str = ", ".join(map(str, pila))
+            print("Pila: "+pila_str)
+            print("Error sintactico se esperaba un '=' pero se obtuvo un: "+token)
+            return True
+        elif estado_actual == "q18":
+            pila_str = ", ".join(map(str, pila))
+            print("Pila: "+pila_str)
+            print("Error sintactico se esperaba un operando pero se obtuvo un: "+token)
+            return True
+        elif estado_actual == "q13":
+            pila_str = ", ".join(map(str, pila))
+            print("Pila: "+pila_str)
+            print("Error sintactico se esperaba un ';' pero se obtuvo un: "+token)
+            return True
+        elif estado_actual == "q32":
+            pila_str = ", ".join(map(str, pila))
+            print("Pila: "+pila_str)
+            print("Error sintactico se esperaba un ) pero se obtuvo un: "+token)
+            return True
+        pila_str = ", ".join(map(str, pila))
+        print("Pila: "+pila_str)
+        print("Error sintactico se esperaba un "+token+" pero se obtuvo un: "+token)
+        return True
+        
+    else:
+        return False
+        '''
